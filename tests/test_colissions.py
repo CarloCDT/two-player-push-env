@@ -1,18 +1,21 @@
 # tests/test_collisions.py
-import numpy as np
-import pytest
 import numpy.testing as npt
+import pytest
+
 from env import TwoPlayerPushEnv
+
 
 @pytest.fixture
 def env():
     e = TwoPlayerPushEnv()
-    e.seed(0)   # make internal randomness deterministic for test runs
+    e.seed(0)  # make internal randomness deterministic for test runs
     e.reset()
     return e
 
+
 def test_direct_horizontal_collision(env):
-    """
+    """Tests direct horizontal collision between players and balls.
+
     All objects in same row:
     P1 at (4,2), B1 at (4,3), B2 at (4,4), P2 at (4,5)
     P1 moves right (4), P2 moves left (3) -> collision => nothing changes
@@ -31,9 +34,11 @@ def test_direct_horizontal_collision(env):
     assert max(rewards) == 0, "No points should be awarded"
     assert not terminated and not truncated, "Game should not end"
 
+
 def test_vertical_collision(env):
-    """
-    Column-aligned scenario:
+    """Tests vertical collision between players and balls.
+
+    Column-aligned scenario.
     P1 above B1, P2 below B2 in same column.
     P1 moves down (2), P2 moves up (1) -> collision => nothing changes
     """
@@ -51,9 +56,10 @@ def test_vertical_collision(env):
     assert max(rewards) == 0, "No points should be awarded"
     assert not terminated and not truncated, "Game should not end"
 
+
 def test_direct_horizontal_collision_with_gap():
     env = TwoPlayerPushEnv()
-    
+
     possible_b1_positions = {tuple((3, 4)), tuple((5, 4))}
     possible_b2_positions = {tuple((3, 4)), tuple((5, 4))}
 
@@ -76,9 +82,10 @@ def test_direct_horizontal_collision_with_gap():
         assert max(rewards) == 0
         assert not terminated and not truncated
 
+
 def test_direct_vertical_collision_with_gap():
     env = TwoPlayerPushEnv()
-    
+
     possible_b1_positions = {tuple((4, 3)), tuple((4, 5))}
     possible_b2_positions = {tuple((4, 3)), tuple((4, 5))}
 

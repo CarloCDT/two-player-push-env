@@ -8,11 +8,11 @@ In this environment, two players compete to push balls off the opposite edges of
 
 - **Two players**: Each can move up, down, left, right or stay still
 - **Two balls**: Can be pushed by either player
-- **Scoring**: 
+- **Scoring**:
   - Player 1 scores when a ball falls off the left edge
   - Player 2 scores when a ball falls off the right edge
   - Any ball falling off top/bottom edges respawns randomly
-- **Collisions**: 
+- **Collisions**:
   - Players cannot occupy the same cell
   - When balls collide, they randomly split vertically or horizontally
   - Objects cannot pass through each other
@@ -20,7 +20,7 @@ In this environment, two players compete to push balls off the opposite edges of
 ## 🔧 Installation
 
 ```bash
-git clone https://github.com/yourusername/two-player-push-env.git
+git clone https://github.com/CarloCDT/two-player-push-env.git
 cd two-player-push-env
 pip install -e .
 ```
