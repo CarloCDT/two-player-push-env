@@ -253,6 +253,11 @@ class TwoPlayerPushEnv(gym.Env):
             truncated: Whether episode was truncated
             info: Additional information
         """
+        if self.step_count >= self.max_steps:
+            raise RuntimeError(
+                f"Calling step() after episode end. Current steps: {self.step_count}, Max steps: {self.max_steps}"
+            )
+
         a1, a2 = int(action[0]), int(action[1])
         self.step_count += 1
 
@@ -568,7 +573,7 @@ class TwoPlayerPushEnv(gym.Env):
 
         # Termination/truncation
         terminated = (self.p1_score >= self.goal_score) or (self.p2_score >= self.goal_score)
-        truncated = self.step_count >= self.max_steps
+        truncated = self.step_count >= self.max_steps  # This was correct
 
         info = {
             "step_count": self.step_count,
@@ -587,6 +592,10 @@ class TwoPlayerPushEnv(gym.Env):
                 "b2": intended_b2,
             },
         }
+
+        # Force episode end if max steps reached
+        if truncated:
+            return obs, rewards, False, True, info  # Early return when truncated
 
         return obs, rewards, bool(terminated), bool(truncated), info
 
